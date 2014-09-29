@@ -15,6 +15,7 @@ import android.view.MenuItem;
 public class MyActivity extends Activity {
     private final String EXTRA_EVENT_ID = "event_id";
     private final String EXTRA_VOICE_REPLY = "extra_voice_reply";
+    private final static String GROUP_KEY_EMAILS = "group_key_emails";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class MyActivity extends Activity {
         createNotificationWithWearOnlyAction(2, "Test", "Hey look for some actions!");
         createNotificationBigStyle(3, "Test", "This is a big style notification, you should see this by default. How cool is that, right? Adding more text, because why not?");
         createNotificationWithVoiceAction(4, "Test", "Are you there? Want to say something?");
+        createNotificationsGroup(5, "Test group", "I'm a nice and cool notification!", "Hey I'm a cool notification too!");
     }
 
 
@@ -186,5 +188,45 @@ public class MyActivity extends Activity {
         // Issue the notification
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(notificationId, notification);
+    }
+
+    private void createNotificationsGroup(int eventId, String eventTitle, String eventDescription, String otherEventDescription) {
+        final int notificationId = 006;
+
+        // Build a notification, setting the group appropriately
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle(eventTitle)
+                .setContentText(eventDescription)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setGroup(GROUP_KEY_EMAILS)
+                .build();
+
+        Notification notification2 = new NotificationCompat.Builder(this)
+                .setContentTitle("Another event!")
+                .setContentText(otherEventDescription)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setGroup(GROUP_KEY_EMAILS)
+                .build();
+
+
+        // Create an InboxStyle notification
+        Notification summary = new NotificationCompat.Builder(this)
+                .setContentTitle("2 new messages")
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setStyle(new NotificationCompat.InboxStyle()
+                        .addLine("Alex Faaborg   Check this out")
+                        .addLine("Jeff Chang   Launch Party")
+                        .setBigContentTitle("2 new messages")
+                        .setSummaryText("johndoe@gmail.com"))
+                .setGroup(GROUP_KEY_EMAILS)
+                .setGroupSummary(true)
+                .build();
+
+        // Issue the notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        notificationManager.notify(notificationId, notification);
+        notificationManager.notify(notificationId+1, notification2);
+        notificationManager.notify(notificationId+2, summary);
     }
 }
