@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.wearable.view.CardFrame xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MyActivity"
     tools:deviceIds="wear_square">
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_square" />
-</android.support.wearable.view.CardFrame>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="90dp"
+        android:textSize="24sp"
+        android:textColor="#000"
+        android:text="0.0" />
+
+    <ImageView
+        android:id="@+id/compass"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/compass"/>
+</RelativeLayout>
